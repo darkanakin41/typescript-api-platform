@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 
-export interface GetOneOptions {
+export default interface GetOneOptions {
   props?: string[]
   axiosConfig?: AxiosRequestConfig
 }

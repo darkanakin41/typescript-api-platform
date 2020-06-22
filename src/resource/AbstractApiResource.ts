@@ -1,10 +1,10 @@
 import AbstractResource from './AbstractResource'
 import createPropsParams from '../function/createPropsParams'
 import AxiosResponseExt from '../model/AxiosResponseExt'
-import { GetOptions } from '@/service/api-platform/model/GetOptions'
-import { GetOneOptions } from '@/service/api-platform/model/GetOneOptions'
 import { AxiosRequestConfig } from 'axios'
 import moment from 'moment'
+import GetOptions from '../model/GetOptions'
+import GetOneOptions from '../model/GetOneOptions'
 
 export default abstract class AbstractApiResource<
   ResponseType,
