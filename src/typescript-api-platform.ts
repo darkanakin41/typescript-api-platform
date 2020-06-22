@@ -1,6 +1,7 @@
 // Expose all models
 import AbstractData from './model/AbstractData'
 import ApiSearch from './model/ApiSearch'
+import ApiSort from './model/ApiSort'
 import AxiosResponseExt from './model/AxiosResponseExt'
 import GetOneOptions from './model/GetOneOptions'
 import GetOptions from './model/GetOptions'
@@ -22,6 +23,7 @@ import DefaultDataResource from './resource/DefaultDataResource'
 export {
   AbstractData,
   ApiSearch,
+  ApiSort,
   AxiosResponseExt,
   GetOneOptions,
   GetOptions,

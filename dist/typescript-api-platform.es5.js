@@ -197,7 +197,8 @@ var AbstractResource = /** @class */ (function () {
     AbstractResource.prototype.wrapPromise = function (axiosPromise, objectFactory) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            axiosPromise.then(function (axiosResponse) {
+            axiosPromise
+                .then(function (axiosResponse) {
                 var data = axiosResponse.data;
                 if (typeof data === 'object') {
                     data = _this.wrapHydraItem(data);
@@ -211,7 +212,9 @@ var AbstractResource = /** @class */ (function () {
                     data.$axios = axiosResponse;
                     delete data.$axios.data;
                     var headers = axiosResponse.headers;
-                    if ('pagination-page' in headers || 'pagination-itemsperpage' in headers || 'pagination-itemstotalcount' in headers) {
+                    if ('pagination-page' in headers ||
+                        'pagination-itemsperpage' in headers ||
+                        'pagination-itemstotalcount' in headers) {
                         data.$page = {
                             page: parseInt(headers['pagination-page'], 10),
                             itemsPerPage: parseInt(headers['pagination-itemsperpage'], 10),
@@ -223,7 +226,8 @@ var AbstractResource = /** @class */ (function () {
                 else {
                     resolve(axiosResponse.data);
                 }
-            }).catch(reject);
+            })
+                .catch(reject);
         });
     };
     return AbstractResource;
