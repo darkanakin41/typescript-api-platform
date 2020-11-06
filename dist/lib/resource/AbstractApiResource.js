@@ -88,10 +88,12 @@ var AbstractApiResource = /** @class */ (function (_super) {
         if (options.searches) {
             var _loop_1 = function (search) {
                 var searchArray;
-                if (typeof search.query === 'string' || typeof search.query === 'number') {
+                if (['boolean', 'string', 'number'].indexOf(typeof search.query) !== -1) {
+                    // @ts-ignore
                     searchArray = [search.query];
                 }
                 else {
+                    // @ts-ignore
                     searchArray = search.query;
                 }
                 searchArray.forEach(function (item) {

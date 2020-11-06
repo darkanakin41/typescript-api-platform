@@ -5,7 +5,7 @@ import GetOneOptions from '../model/GetOneOptions';
 export default abstract class AbstractApiResource<ResponseType, InputType = Partial<ResponseType>> extends AbstractResource {
     abstract readonly prefix: string;
     protected loadProps(params: string[], options: GetOneOptions): void;
-    protected buildSearch(field: string, query: string | number, type: string | undefined, isArray?: boolean): string;
+    protected buildSearch(field: string, query: string | number | boolean, type: string | undefined, isArray?: boolean): string;
     protected loadSearches(params: string[], options: GetOptions): void;
     protected loadSort(params: string[], options: GetOptions): void;
     protected loadPage(params: string[], options: GetOptions): void;

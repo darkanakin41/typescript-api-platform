@@ -5,6 +5,6 @@
  */
 export default interface ApiSearch {
     field: string;
-    query: string | number | string[] | number[];
+    query: (string | number | boolean) | (string | number | boolean)[];
     type?: string;
 }
