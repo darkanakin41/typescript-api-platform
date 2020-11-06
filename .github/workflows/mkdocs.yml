@@ -13,4 +13,5 @@ jobs:
           node-version: '14'
           check-latest: true
       - run: npm i
+      - run: echo ${{github.repository}}
       - run: npm run docs:deploy
