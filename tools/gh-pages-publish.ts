@@ -26,6 +26,6 @@ exec('git config user.name "Pierre LEJEUNE"')
 exec('git config user.email "darkanakin41@gmail.com"')
 exec('git commit -m "docs(docs): update gh-pages"')
 exec(
-  `git push --force --quiet gh-pages`
+  `git push --force --quiet --set-upstream gh-pages master`
 )
 echo("Docs deployed!!")
