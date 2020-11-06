@@ -18,6 +18,7 @@ let repository = (parsedUrl.host || "") + (parsedUrl.path || "")
 let ghToken = process.env.GITHUB_TOKEN
 
 echo("Deploying docs!!!")
+echo("process.env.GITHUB_TOKEN")
 cd("docs")
 touch(".nojekyll")
 exec("git init")

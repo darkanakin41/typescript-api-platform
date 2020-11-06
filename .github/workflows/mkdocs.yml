@@ -13,4 +13,15 @@ jobs:
           node-version: '14'
           check-latest: true
       - run: npm i
-      - run: npm run docs:deploy
+      - run: npm run docs:build
+      - name: Publish Doc
+        run: |
+          cd docs
+          touch .nojekyll
+          git init
+          git add .
+          git config user.name "Pierre LEJEUNE"
+          git config user.email "darkanakin41@gmail.com"
+          git commit -m "docs(docs): update gh-pages"
+          git push --force --quiet master:gh-pages
+
