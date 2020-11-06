@@ -12,13 +12,13 @@ export default abstract class AbstractApiResource<
 > extends AbstractResource {
   abstract readonly prefix: string
 
-  private loadProps(params: string[], options: GetOneOptions) {
+  protected loadProps(params: string[], options: GetOneOptions) {
     if (options.props) {
       params.push(createPropsParams(options.props))
     }
   }
 
-  private buildSearch(
+  protected buildSearch(
     field: string,
     query: string | number,
     type: string | undefined,
@@ -33,7 +33,7 @@ export default abstract class AbstractApiResource<
     return `${field}=${query}`
   }
 
-  private loadSearches(params: string[], options: GetOptions) {
+  protected loadSearches(params: string[], options: GetOptions) {
     if (options.searches) {
       for (const search of options.searches) {
         if (Array.isArray(search.query)) {
@@ -47,13 +47,13 @@ export default abstract class AbstractApiResource<
     }
   }
 
-  private loadSort(params: string[], options: GetOptions) {
+  protected loadSort(params: string[], options: GetOptions) {
     if (options.sort) {
       params.push(`order[${options.sort.field}]=${options.sort.desc ? 'desc' : 'asc'}`)
     }
   }
 
-  private loadPage(params: string[], options: GetOptions) {
+  protected loadPage(params: string[], options: GetOptions) {
     if (options.page) {
       params.push('pagination=true')
       if (options.page.page) {
@@ -67,7 +67,7 @@ export default abstract class AbstractApiResource<
     }
   }
 
-  private buildParams(options?: GetOptions | GetOneOptions): string[] {
+  protected buildParams(options?: GetOptions | GetOneOptions): string[] {
     const params: string[] = []
 
     if (!options) options = {}
@@ -80,14 +80,14 @@ export default abstract class AbstractApiResource<
     return params
   }
 
-  private buildUrl(path: string, options?: GetOptions | GetOneOptions): string {
+  protected buildUrl(path: string, options?: GetOptions | GetOneOptions): string {
     const params = this.buildParams(options)
 
     // TODO: Les paramètres peuvent être pasés proprement dans AXIOS !
     return params && params.length > 0 ? `${path}?${params.join('&')}` : path
   }
 
-  private preProcessData(item: any): any {
+  protected preProcessData(item: any): any {
     Object.keys(item).forEach(key => {
       if (item[key] instanceof Date) {
         const date = moment(item[key])
