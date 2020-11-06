@@ -1,1 +1,0 @@
-{"version":3,"file":"configureCancel.js","sourceRoot":"","sources":["../../../src/function/configureCancel.ts"],"names":[],"mappings":";;AAEA,SAAwB,eAAe,CACrC,iBAAqC,EACrC,MAA2B;IAE3B,IAAI,CAAC,iBAAiB,EAAE;QACtB,OAAO,MAAM,CAAA;KACd;IAED,IAAI,CAAC,MAAM,EAAE;QACX,MAAM,GAAG,EAAE,CAAA;KACZ;IAED,MAAM,CAAC,WAAW,GAAG,iBAAiB,CAAC,KAAK,CAAA;IAC5C,OAAO,MAAM,CAAA;AACf,CAAC;AAdD,kCAcC"}
