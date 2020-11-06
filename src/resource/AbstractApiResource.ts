@@ -15,7 +15,7 @@ export default abstract class AbstractApiResource<ResponseType, InputType = Part
     }
   }
 
-  protected buildSearch (field: string, query: string | number, type: string | undefined, isArray: boolean = false): string {
+  protected buildSearch (field: string, query: string | number | boolean, type: string | undefined, isArray: boolean = false): string {
     if (type) {
       return `${field}[${type}]=${query}`
     }
@@ -28,13 +28,15 @@ export default abstract class AbstractApiResource<ResponseType, InputType = Part
   protected loadSearches (params: string[], options: GetOptions): void {
     if (options.searches) {
       for (const search of options.searches) {
-        let searchArray: (string|number)[]
-        if (typeof search.query === 'string' || typeof search.query === 'number') {
+        let searchArray: (string | number | boolean)[]
+        if (['boolean', 'string', 'number'].indexOf(typeof search.query) !== -1) {
+          // @ts-ignore
           searchArray = [search.query]
         } else {
+          // @ts-ignore
           searchArray = search.query
         }
-        searchArray.forEach((item: string | number) => {
+        searchArray.forEach((item: (string | number | boolean)) => {
           params.push(this.buildSearch(search.field, item, search.type, searchArray.length > 0))
         })
       }
