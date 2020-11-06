@@ -1,4 +1,4 @@
-name: mkdocs
+name: gh-pages-doc
 on:
   push:
     branches:
@@ -16,12 +16,10 @@ jobs:
       - run: npm run docs:build
       - name: Publish Doc
         run: |
-          cd docs
-          touch .nojekyll
-          git init
+          touch docs.nojekyll
           git add .
-          git config user.name "Pierre LEJEUNE"
-          git config user.email "darkanakin41@gmail.com"
-          git commit -m "docs(docs): update gh-pages"
-          git push --force --quiet master:gh-pages
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git commit -m "docs(docs): update gh-pages" -a
+          git push --force --set-upstream master:gh-pages master
 
