@@ -257,16 +257,17 @@ var AbstractApiResource = /** @class */ (function (_super) {
         var _this = this;
         if (options.searches) {
             var _loop_1 = function (search) {
-                if (Array.isArray(search.query)) {
-                    search.query.forEach(function (item) {
-                        params.push(_this.buildSearch(search.field, item, search.type, true));
-                    });
+                var searchArray;
+                if (typeof search.query === 'string' || typeof search.query === 'number') {
+                    searchArray = [search.query];
                 }
                 else {
-                    params.push(this_1.buildSearch(search.field, search.query, search.type));
+                    searchArray = search.query;
                 }
+                searchArray.forEach(function (item) {
+                    params.push(_this.buildSearch(search.field, item, search.type, searchArray.length > 0));
+                });
             };
-            var this_1 = this;
             for (var _i = 0, _a = options.searches; _i < _a.length; _i++) {
                 var search = _a[_i];
                 _loop_1(search);
@@ -304,7 +305,6 @@ var AbstractApiResource = /** @class */ (function (_super) {
     };
     AbstractApiResource.prototype.buildUrl = function (path, options) {
         var params = this.buildParams(options);
-        // TODO: Les paramètres peuvent être pasés proprement dans AXIOS !
         return params && params.length > 0 ? path + "?" + params.join('&') : path;
     };
     AbstractApiResource.prototype.preProcessData = function (item) {
@@ -337,11 +337,7 @@ var AbstractApiResource = /** @class */ (function (_super) {
         });
     };
     AbstractApiResource.prototype.getAll = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.get(options)];
-            });
-        });
+        return this.get(options);
     };
     AbstractApiResource.prototype.get = function (options) {
         var url = this.buildUrl(this.prefix, options);

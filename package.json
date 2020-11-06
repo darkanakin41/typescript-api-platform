@@ -31,7 +31,6 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "precommit": "lint-staged",
     "travis-deploy-once": "travis-deploy-once"
   },
   "lint-staged": {
@@ -99,7 +98,7 @@
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "replace-in-file": "^3.4.2",
-    "rimraf": "^2.6.2",
+    "rimraf": "^2.7.1",
     "rollup": "^0.67.0",
     "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-json": "^3.1.0",

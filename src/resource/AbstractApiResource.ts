@@ -6,24 +6,16 @@ import moment from 'moment'
 import GetOptions from '../model/GetOptions'
 import GetOneOptions from '../model/GetOneOptions'
 
-export default abstract class AbstractApiResource<
-  ResponseType,
-  InputType = Partial<ResponseType>
-> extends AbstractResource {
+export default abstract class AbstractApiResource<ResponseType, InputType = Partial<ResponseType>> extends AbstractResource {
   abstract readonly prefix: string
 
-  protected loadProps(params: string[], options: GetOneOptions) {
+  protected loadProps (params: string[], options: GetOneOptions): void {
     if (options.props) {
       params.push(createPropsParams(options.props))
     }
   }
 
-  protected buildSearch(
-    field: string,
-    query: string | number,
-    type: string | undefined,
-    isArray: boolean = false
-  ) {
+  protected buildSearch (field: string, query: string | number, type: string | undefined, isArray: boolean = false): string {
     if (type) {
       return `${field}[${type}]=${query}`
     }
@@ -33,27 +25,29 @@ export default abstract class AbstractApiResource<
     return `${field}=${query}`
   }
 
-  protected loadSearches(params: string[], options: GetOptions) {
+  protected loadSearches (params: string[], options: GetOptions): void {
     if (options.searches) {
       for (const search of options.searches) {
-        if (Array.isArray(search.query)) {
-          search.query.forEach((item: string | number) => {
-            params.push(this.buildSearch(search.field, item, search.type, true))
-          })
+        let searchArray: (string|number)[]
+        if (typeof search.query === 'string' || typeof search.query === 'number') {
+          searchArray = [search.query]
         } else {
-          params.push(this.buildSearch(search.field, search.query, search.type))
+          searchArray = search.query
         }
+        searchArray.forEach((item: string | number) => {
+          params.push(this.buildSearch(search.field, item, search.type, searchArray.length > 0))
+        })
       }
     }
   }
 
-  protected loadSort(params: string[], options: GetOptions) {
+  protected loadSort (params: string[], options: GetOptions): void {
     if (options.sort) {
       params.push(`order[${options.sort.field}]=${options.sort.desc ? 'desc' : 'asc'}`)
     }
   }
 
-  protected loadPage(params: string[], options: GetOptions) {
+  protected loadPage (params: string[], options: GetOptions) {
     if (options.page) {
       params.push('pagination=true')
       if (options.page.page) {
@@ -67,7 +61,7 @@ export default abstract class AbstractApiResource<
     }
   }
 
-  protected buildParams(options?: GetOptions | GetOneOptions): string[] {
+  protected buildParams (options?: GetOptions | GetOneOptions): string[] {
     const params: string[] = []
 
     if (!options) options = {}
@@ -80,14 +74,12 @@ export default abstract class AbstractApiResource<
     return params
   }
 
-  protected buildUrl(path: string, options?: GetOptions | GetOneOptions): string {
+  protected buildUrl (path: string, options?: GetOptions | GetOneOptions): string {
     const params = this.buildParams(options)
-
-    // TODO: Les paramètres peuvent être pasés proprement dans AXIOS !
     return params && params.length > 0 ? `${path}?${params.join('&')}` : path
   }
 
-  protected preProcessData(item: any): any {
+  protected preProcessData (item: any): any {
     Object.keys(item).forEach(key => {
       if (item[key] instanceof Date) {
         const date = moment(item[key])
@@ -97,9 +89,7 @@ export default abstract class AbstractApiResource<
     return item
   }
 
-  async count<GetResponseType = ResponseType>(
-    options?: GetOptions
-  ): Promise<number & AxiosResponseExt> {
+  async count<GetResponseType = ResponseType> (options?: GetOptions): Promise<number & AxiosResponseExt> {
     const numberOfResultOptions: GetOptions = {
       ...options,
       ...{
@@ -113,15 +103,11 @@ export default abstract class AbstractApiResource<
     return getNumberOfResults.$hydra['hydra:totalItems']
   }
 
-  async getAll<GetResponseType = ResponseType>(
-    options?: GetOptions
-  ): Promise<GetResponseType[] & AxiosResponseExt> {
+  getAll<GetResponseType = ResponseType> (options?: GetOptions): Promise<GetResponseType[] & AxiosResponseExt> {
     return this.get(options)
   }
 
-  get<GetResponseType = ResponseType>(
-    options?: GetOptions
-  ): Promise<GetResponseType[] & AxiosResponseExt> {
+  get<GetResponseType = ResponseType> (options?: GetOptions): Promise<GetResponseType[] & AxiosResponseExt> {
     const url = this.buildUrl(this.prefix, options)
     const axiosConfig = options ? options.axiosConfig : undefined
 
@@ -129,10 +115,7 @@ export default abstract class AbstractApiResource<
     return promise as Promise<GetResponseType[] & AxiosResponseExt>
   }
 
-  getOne<GetResponseType = ResponseType>(
-    id: number | string,
-    options?: GetOneOptions
-  ): Promise<GetResponseType & AxiosResponseExt> {
+  getOne<GetResponseType = ResponseType> (id: number | string, options?: GetOneOptions): Promise<GetResponseType & AxiosResponseExt> {
     const url = this.buildUrl(`${this.prefix}/${id}`, options)
     const axiosConfig = options ? options.axiosConfig : undefined
 
@@ -140,10 +123,7 @@ export default abstract class AbstractApiResource<
     return promise as Promise<GetResponseType & AxiosResponseExt>
   }
 
-  post<PostInputType = InputType, PostResponseType = ResponseType>(
-    item: PostInputType,
-    options?: GetOneOptions
-  ): Promise<PostResponseType & AxiosResponseExt> {
+  post<PostInputType = InputType, PostResponseType = ResponseType> (item: PostInputType, options?: GetOneOptions): Promise<PostResponseType & AxiosResponseExt> {
     const url = this.buildUrl(this.prefix, options)
     const axiosConfig = options ? options.axiosConfig : undefined
 
@@ -151,10 +131,7 @@ export default abstract class AbstractApiResource<
     return promise as Promise<PostResponseType & AxiosResponseExt>
   }
 
-  delete<DeleteResponseType = ResponseType>(
-    id: number | string,
-    options?: GetOneOptions
-  ): Promise<ResponseType & AxiosResponseExt> {
+  delete<DeleteResponseType = ResponseType> (id: number | string, options?: GetOneOptions): Promise<ResponseType & AxiosResponseExt> {
     const url = this.buildUrl(`${this.prefix}/${id}`, options)
     const axiosConfig = options ? options.axiosConfig : undefined
 
@@ -162,11 +139,7 @@ export default abstract class AbstractApiResource<
     return promise as Promise<ResponseType & AxiosResponseExt>
   }
 
-  put<PutInputType = InputType, PutResponseType = ResponseType>(
-    id: number | string,
-    item: PutInputType,
-    options?: GetOneOptions
-  ): Promise<PutResponseType & AxiosResponseExt> {
+  put<PutInputType = InputType, PutResponseType = ResponseType> (id: number | string, item: PutInputType, options?: GetOneOptions): Promise<PutResponseType & AxiosResponseExt> {
     const url = this.buildUrl(`${this.prefix}/${id}`, options)
     const axiosConfig = options ? options.axiosConfig : undefined
 
@@ -174,14 +147,9 @@ export default abstract class AbstractApiResource<
     return promise as Promise<PutResponseType & AxiosResponseExt>
   }
 
-  patch<PatchInputType = InputType, PatchResponseType = ResponseType>(
-    id: number | string,
-    item: PatchInputType,
-    options?: GetOneOptions
-  ): Promise<PatchResponseType & AxiosResponseExt> {
+  patch<PatchInputType = InputType, PatchResponseType = ResponseType> (id: number | string, item: PatchInputType, options?: GetOneOptions): Promise<PatchResponseType & AxiosResponseExt> {
     const url = this.buildUrl(`${this.prefix}/${id}`, options)
-    const axiosConfig =
-      options && options.axiosConfig ? options.axiosConfig : ({} as AxiosRequestConfig)
+    const axiosConfig = options && options.axiosConfig ? options.axiosConfig : ({} as AxiosRequestConfig)
 
     if (!axiosConfig.headers) {
       axiosConfig.headers = {}
