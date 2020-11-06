@@ -12,4 +12,5 @@ jobs:
         with:
           node-version: '14'
           check-latest: true
+      - run: npm i
       - run: npm run docs:deploy
