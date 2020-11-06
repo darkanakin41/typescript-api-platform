@@ -273,7 +273,7 @@
                         searchArray = search.query;
                     }
                     searchArray.forEach(function (item) {
-                        params.push(_this.buildSearch(search.field, item, search.type, searchArray.length > 0));
+                        params.push(_this.buildSearch(search.field, item, search.type, (searchArray.length > 1)));
                     });
                 };
                 for (var _i = 0, _a = options.searches; _i < _a.length; _i++) {

@@ -37,7 +37,7 @@ export default abstract class AbstractApiResource<ResponseType, InputType = Part
           searchArray = search.query
         }
         searchArray.forEach((item: (string | number | boolean)) => {
-          params.push(this.buildSearch(search.field, item, search.type, searchArray.length > 0))
+          params.push(this.buildSearch(search.field, item, search.type, (searchArray.length > 1)))
         })
       }
     }
