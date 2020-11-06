@@ -1,4 +1,4 @@
-name: gh-pages-doc
+name: gihub pages
 on:
   push:
     branches:
@@ -14,12 +14,8 @@ jobs:
           check-latest: true
       - run: npm i
       - run: npm run docs:build
-      - name: Publish Doc
-        run: |
-          touch docs.nojekyll
-          git add .
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
-          git commit -m "docs(docs): update gh-pages" -a
-          git push --force --set-upstream master:gh-pages master
-
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
