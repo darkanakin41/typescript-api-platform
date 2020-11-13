@@ -345,7 +345,10 @@
             });
         };
         AbstractApiResource.prototype.getAll = function (options) {
-            return this.get(options);
+            var url = this.buildUrl(this.prefix, options);
+            var axiosConfig = options ? options.axiosConfig : undefined;
+            var promise = this.wrapPromise(this.axios.get(url, axiosConfig));
+            return promise;
         };
         AbstractApiResource.prototype.get = function (options) {
             var url = this.buildUrl(this.prefix, options);
