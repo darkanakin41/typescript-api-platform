@@ -106,7 +106,11 @@ export default abstract class AbstractApiResource<ResponseType, InputType = Part
   }
 
   getAll<GetResponseType = ResponseType> (options?: GetOptions): Promise<GetResponseType[] & AxiosResponseExt> {
-    return this.get(options)
+    const url = this.buildUrl(this.prefix, options)
+    const axiosConfig = options ? options.axiosConfig : undefined
+
+    const promise = this.wrapPromise(this.axios.get(url, axiosConfig))
+    return promise as Promise<GetResponseType[] & AxiosResponseExt>
   }
 
   get<GetResponseType = ResponseType> (options?: GetOptions): Promise<GetResponseType[] & AxiosResponseExt> {

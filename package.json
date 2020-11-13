@@ -1,6 +1,6 @@
 {
   "name": "typescript-api-platform",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "keywords": [],
   "main": "dist/typescript-api-platform.umd.js",
