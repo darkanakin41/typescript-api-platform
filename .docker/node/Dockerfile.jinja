@@ -1,0 +1,20 @@
+FROM node:14
+LABEL maintainer="Pierre LEJEUNE <darkanakin41@gmail.com>"
+
+# Mise à jour de npm
+RUN npm i --global npm
+
+WORKDIR /app
+
+USER node
+
+RUN yarn config set cafile ${NODE_EXTRA_CA_CERTS} --global
+RUN npm config set prefix /home/node/.npm-packages
+ENV PATH="${PATH}:/home/node/.npm-packages/bin"
+
+
+RUN npm install -g @vue/cli
+RUN npm install -g semantic-release-cli
+
+VOLUME /app
+VOLUME /home/node/.cache

@@ -1,6 +1,6 @@
 {
   "name": "typescript-api-platform",
-  "version": "0.1.2",
+  "version": "0.0.0-development",
   "description": "",
   "keywords": [],
   "main": "dist/typescript-api-platform.umd.js",
@@ -12,7 +12,7 @@
   "author": "Pierre LEJEUNE <darkanakin41@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "github.com/darkanakin41/typescript-api-platform.git"
+    "url": "https://github.com/darkanakin41/typescript-api-platform.git"
   },
   "license": "MIT",
   "engines": {
@@ -106,7 +106,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.18.0",
-    "semantic-release": "^15.9.16",
+    "semantic-release": "^17.2.2",
     "shelljs": "^0.8.3",
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^23.10.2",

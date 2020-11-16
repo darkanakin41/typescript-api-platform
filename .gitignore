@@ -9,3 +9,16 @@ compiled
 .awcache
 .rpt2_cache
 docs
+
+###> gfi-centre-ouest/docker-devbox ###
+/docker-compose.yml
+/.bin/ncu
+/.bin/npm
+/.bin/semantic-release-cli
+/.bin/vue
+/.docker/node/Dockerfile
+/.docker/node/fixuid.tar.gz
+/*ddb.local.*
+/.bash_enter
+/.bash_leave
+###< gfi-centre-ouest/docker-devbox ###

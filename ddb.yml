@@ -1,0 +1,7 @@
+
+file:
+    excludes:
+    - '**/.git'
+    - '**/cache'
+    - '**/node_modules'
+    - '**/coverage'
